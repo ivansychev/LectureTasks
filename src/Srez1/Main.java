@@ -12,7 +12,7 @@ public class Main {
         RandNumThread randNumThread = new RandNumThread(numStore);
         DisplayNumThread displayNumThread = new DisplayNumThread(numStore);
 
-        new Thread(randNumThread).start();
-        new Thread(displayNumThread).start();
+        new Thread(randNumThread, "NumGenerator").start();
+        new Thread(displayNumThread, "Displayer").start();
     }
 }

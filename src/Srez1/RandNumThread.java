@@ -1,6 +1,7 @@
 package Srez1;
 
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by ivans on 12/04/2017.
@@ -26,7 +27,6 @@ public class RandNumThread implements Runnable {
                     e.printStackTrace();
                 }
                 int arr[] = null;
-                //String s = "[";
                 int randomNum;
                 for(int j = 0; j<5; j++)
                 {
@@ -42,12 +42,22 @@ public class RandNumThread implements Runnable {
                 if(++counter%5==0)
                 {
                     numStore.getLock().notify();
+                    numStore.setSuspendDisplayer(false);
                     try {
                         numStore.getLock().wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
+
+                for (ConcurrentHashMap.Entry<Integer, Integer> entry : numStore.getNumStore().entrySet()) {
+                    if (entry.getValue() > 4) {
+
+                        System.out.println("Number " + entry.getKey() + " were generated " + entry.getValue() + " times");
+                        numStore.setRepeated5Times(true);
+                    }
+                }
+                numStore.getLock().notify();
             }
         }
     }
