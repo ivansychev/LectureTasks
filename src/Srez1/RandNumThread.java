@@ -48,7 +48,6 @@ public class RandNumThread implements Runnable {
                         e.printStackTrace();
                     }
                 }
-                numStore.setSuspendDisplayer(false);
             }
         }
     }
